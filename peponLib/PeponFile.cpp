@@ -3,8 +3,8 @@
 #include "PeponFile.hpp"
 #include "PeponConfig.hpp"
 
-#include <extLibs/Utils/MapFinder.hpp>
-#include <extLibs/Utils/StringUtils.hpp>
+#include <myoga-utils/Utils/MapFinder.hpp>
+#include <myoga-utils/Utils/StringUtils.hpp>
 
 namespace pepon
 {
@@ -15,7 +15,12 @@ void PeponFile::loadFile(t_filePath fileName)
 
     // Open file
     std::ifstream handle;
+
+#ifdef PEPON_USE_STL_PATH
     handle.open(fileName);
+#else
+    handle.open(fileName.data());
+#endif
 
     if (!handle)
         throw SyntaxError("File cannot be opened!");
@@ -49,7 +54,12 @@ void PeponFile::saveFile(t_filePath fileName)
 
     // Get a file handle
     std::ofstream handle;
+
+#ifdef PEPON_USE_STL_PATH
     handle.open(fileName, std::ios_base::trunc);
+#else
+    handle.open(fileName.data(), std::ios_base::trunc);
+#endif
 
     this->print(handle);
 
@@ -364,7 +374,7 @@ void PeponFile::loadFromMemory(const std::vector<std::string>& lines)
             if (!hasOpenCurlyBracket && hasClosedCurlyBracket)
             {
 
-                throw SyntaxError("Syntax error at line " + std::to_string(lineNumber) + "\nAssignment. No open curly bracket, but closing. What?");
+                throw SyntaxError("Syntax error at line " + std::to_string(lineNumber) + "\nAssignment. No open curly bracket, but closing. Did you mean to use '{' ?");
 
             }
             else

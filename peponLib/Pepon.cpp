@@ -1,7 +1,7 @@
 #include "Pepon.hpp"
 #include "PeponConfig.hpp"
 
-#include <extLibs/Utils/StringUtils.hpp>
+#include <myoga-utils/Utils/StringUtils.hpp>
 
 namespace pepon
 {

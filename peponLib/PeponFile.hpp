@@ -5,8 +5,13 @@
 #include <unordered_map>
 
 #include "Pepon.hpp"
+#include "PeponConfig.hpp"
 
-#include "../Variables/Group.hpp"
+#ifdef PEPON_USE_STL_PATH
+    #include <filesystem>
+#endif
+
+#include "Variables/Group.hpp"
 
 namespace pepon
 {

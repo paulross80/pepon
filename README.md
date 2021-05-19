@@ -18,7 +18,7 @@ pf.saveFile("./pepon_out.txt");
 
 ## Configuration:
 
-* Use **#define PEPON_USE_STL_PATH** to specify file path using std::filesystem::path. Otherwise, you must specify file path using std::string_view
+* Set **PEPON_USE_STL_PATH** variable (in the CMakeLists.txt file) to value 1 to specify file paths using __std::filesystem::path__. Otherwise, you must specify file path using __std::string_view__
 
 * struct **PeponQuotes**: You can enable/disable quotation marks for every value shown by the **print()** functions. And you can set the quotation character you want to use
 
@@ -38,7 +38,7 @@ pf.saveFile("./pepon_out.txt");
 ```
 a : int = 1
 ```
-This specifies an __int__ value, named __'a'__, with a value of __1__
+This specifies an __int__ value, named __'a'__, with a value of __1__. 
 Variable name, type and value **MUST** be set, always
 
 String values must be written using opening and closing double quotation marks ('"')
@@ -63,7 +63,7 @@ c : list<bool> = {
 }
 ```
 
-You can also write long strings in multiple lines, but the opening '"' must be written in the same line where the string is declared
+You can also write long strings in multiple lines, but the opening '"' must be written in the same line where the string is declared. Please note that the endline characters will be part of the string
 
 ```
 text : string = "First line ............

@@ -2,17 +2,14 @@
 #include <vector>
 #include <string>
 
-
-// Library configuration
-#define PEPON_USE_STL_PATH
-
+// Pepon
 #include "PeponConfig.hpp"
 
-#include "Pepon/Pepon.hpp"
-#include "Pepon/PeponFile.hpp"
+#include <peponLib/Pepon.hpp>
+#include <peponLib/PeponFile.hpp>
 
-#include "Variables/SingleValue.hpp"
-#include "Variables/ListValue.hpp"
+#include <peponLib/Variables/SingleValue.hpp>
+#include <peponLib/Variables/ListValue.hpp>
 
 
 // Shortcuts
@@ -38,8 +35,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] const char* argv[])
     pepon::SingleValue<int> myValue("myValue", 100);
     myValue.print(quotes);
 
-    pepon::ListValue<float> flotantes("flotantes", std::list<float> { 2.1f, 45.6f, 34.7f });
-    flotantes.print(quotes);
+    pepon::ListValue<float> floating("floating", std::list<float> { 2.1f, 45.6f, 34.7f });
+    floating.print(quotes);
 
 
     // Parse Pepon from memory

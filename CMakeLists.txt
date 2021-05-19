@@ -31,12 +31,42 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(PEPON_DEBUG 1)
 endif()
 
+# Use STL path header?
+set(PEPON_USE_STL_PATH 1)
+
 # Configure a header file to pass the CMake settings to the source code
 # This file MUST be generated in the build folder
 configure_file(
     "${pepon_SOURCE_DIR}/cmake/PeponConfig.hpp.in"
     "${pepon_BINARY_DIR}/PeponConfig.hpp"
 )
+
+
+# --- Add submodules -------------------------------------------------------------------
+find_package(Git QUIET)
+
+if(GIT_FOUND AND EXISTS "${pepon_SOURCE_DIR}/.git")
+# Update submodules as needed
+    option(GIT_SUBMODULE "Check submodules during build" ON)
+
+    if(GIT_SUBMODULE)
+        message(STATUS "Updating git submodules")
+        # This will update the submodules, and if they're not initiated yet, will initiate them
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                        RESULT_VARIABLE GIT_SUBMOD_RESULT)
+
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif()
+
+    endif()
+endif()
+
+# Check if submodules operations were successful
+if(NOT EXISTS "${pepon_SOURCE_DIR}/extLibs/myoga-utils/README.md")
+    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again")
+endif()
 
 
 # --- Compiler configuration -----------------------------------------------------------
@@ -56,10 +86,10 @@ endif()
 
 # --- Project files --------------------------------------------------------------------
 set(PEPON_HEADER_FILES
-    # extLibs/Utils
-    extLibs/Utils/MapFinder.hpp
-    extLibs/Utils/StringUtils.hpp
-    extLibs/Utils/TemplateUtils.hpp
+    # extLibs/myoga-utils/Utils
+    extLibs/myoga-utils/Utils/MapFinder.hpp
+    extLibs/myoga-utils/Utils/StringUtils.hpp
+    extLibs/myoga-utils/Utils/TemplateUtils.hpp
     # peponLib/Variables
     peponLib/Variables/IVariable.hpp
     peponLib/Variables/SingleValue.hpp
@@ -73,8 +103,8 @@ set(PEPON_HEADER_FILES
     )
 
 set(PEPON_SOURCE_FILES
-    # extLibs/Utils
-    extLibs/Utils/StringUtils.cpp
+    # extLibs/myoga-utils/Utils
+    extLibs/myoga-utils/Utils/StringUtils.cpp
     # peponLib/Variables
     peponLib/Variables/IVariable.cpp
     peponLib/Variables/SingleValue.cpp
@@ -103,6 +133,8 @@ target_sources(${PEPON_LIBRARY_TARGET} PRIVATE ${PEPON_HEADER_FILES} PRIVATE ${P
 # Include folders:
 # Easy access to the config file CMake generated for us
 target_include_directories(${PEPON_LIBRARY_TARGET} PUBLIC ${pepon_BINARY_DIR})
+# Source folder
+target_include_directories(${PEPON_LIBRARY_TARGET} PUBLIC ${pepon_SOURCE_DIR})
 # extLibs folder
 target_include_directories(${PEPON_LIBRARY_TARGET} PUBLIC "${pepon_SOURCE_DIR}/extLibs")
 

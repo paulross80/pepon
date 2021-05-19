@@ -1,7 +1,7 @@
 #include <charconv>     // std::from_chars
 
-#include <extLibs/Utils/StringUtils.hpp>
-#include <extLibs/Utils/TemplateUtils.hpp>
+#include <myoga-utils/Utils/StringUtils.hpp>
+#include <myoga-utils/Utils/TemplateUtils.hpp>
 
 #include "Group.hpp"
 

@@ -1,0 +1,3 @@
+[submodule "extLibs/myoga-utils"]
+	path = extLibs/myoga-utils
+	url = ../../paulross80/myoga-utils.git

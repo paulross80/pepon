@@ -13,3 +13,6 @@
 
 // Debug or Release?
 #cmakedefine PEPON_DEBUG @PEPON_DEBUG@
+
+// Use STL path header?
+#cmakedefine PEPON_USE_STL_PATH @PEPON_USE_STL_PATH@
