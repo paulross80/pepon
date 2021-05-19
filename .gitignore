@@ -4,3 +4,5 @@ builds/
 bin/
 # Ignore _old folder (old files)
 _old/
+# Ignore QtCreator user file
+CMakeLists.txt.user
