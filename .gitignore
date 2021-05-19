@@ -1,0 +1,6 @@
+# Ignore builds folder
+builds/
+# Ignore binary folder (lib & executables)
+bin/
+# Ignore _old folder (old files)
+_old/
